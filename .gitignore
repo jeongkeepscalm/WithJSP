@@ -38,5 +38,6 @@ out/
 
 
 ### db information ###
-resources/application.properties
+src/main/resources/application.properties
+src/main/resources/static/index.html
 
