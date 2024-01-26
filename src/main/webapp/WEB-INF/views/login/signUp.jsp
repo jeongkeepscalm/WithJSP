@@ -1,3 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <!doctype html>
 <html lang="ko">
@@ -7,7 +11,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, 그리고 Bootstrap 기여자들">
     <meta name="generator" content="Hugo 0.104.2">
-    <title>Signin Template · Bootstrap v5.2</title>
+    <title>sign up</title>
 
     <link rel="canonical" href="https://getbootstrap.kr/docs/5.2/examples/sign-in/">
 
@@ -76,50 +80,149 @@
         }
     </style>
 
-
     <!-- Custom styles for this template -->
     <link href="/css/signin.css" rel="stylesheet">
+
+    <script>
+
+        let bloodTypes = [
+            <c:forEach items="${bloodTypes}" var="bloodType" varStatus="loop">
+                "<c:out value="${bloodType.description}" />"
+                <c:if test="${!loop.last}">,</c:if>
+            </c:forEach>
+        ];
+
+        bloodTypes.forEach(function(value) {
+            console.log(value);
+        });
+
+
+        console.log(`${bindingResult}`);
+
+
+
+    </script>
+
 </head>
 <body class="text-center">
 
 <main class="form-signin w-100 m-auto">
-    <form action="/join.cm" name="loginForm">
+    <form action="/signUp.cm" name="loginForm" method="post">
 
         <h1 class="h3 mb-3 fw-normal">Sign Up</h1>
 
         <div class="form-floating">
-            <input type="text" class="form-control" id="inputId" placeholder="Id">
+            <input type="text" class="form-control" name="id" id="inputId" placeholder="Id" value="${user.id}">
             <label for="inputId">Id</label>
         </div>
+        <div style="color:red;">
+            <spring:hasBindErrors name="user">
+                <c:if test="${errors.hasFieldErrors('id')}">
+                    ${errors.getFieldError('id').defaultMessage}
+                </c:if>
+            </spring:hasBindErrors>
+        </div>
 
         <div class="form-floating">
-            <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+            <input type="password" class="form-control" name="password" id="inputPassword" value="${user.password}" placeholder="Password">
             <label for="inputPassword">Password</label>
         </div>
+        <div style="color:red;">
+            <spring:hasBindErrors name="user">
+                <c:if test="${errors.hasFieldErrors('password')}">
+                    ${errors.getFieldError('password').defaultMessage}
+                </c:if>
+            </spring:hasBindErrors>
+        </div>
 
         <div class="form-floating">
-            <input type="text" class="form-control" id="inputName" placeholder="Name">
+            <input type="text" class="form-control" name="name" id="inputName" placeholder="Name" value="${user.name}">
             <label for="inputName">Name</label>
         </div>
+        <div style="color:red;">
+            <spring:hasBindErrors name="user">
+                <c:if test="${errors.hasFieldErrors('name')}">
+                    ${errors.getFieldError('name').defaultMessage}
+                </c:if>
+            </spring:hasBindErrors>
+        </div>
 
         <div class="form-floating">
-            <input type="text" class="form-control" id="inputAge" placeholder="Age">
+            <input type="text" class="form-control" name="age" id="inputAge" placeholder="Age" value="${user.age}">
             <label for="inputAge">Age</label>
         </div>
-
-        <div class="form-check" style="padding: 20px; font-size: 17px;">
-            <label>
-                <input type="radio" name="sex" value="male"> male
-            </label>
-            <label>
-                <input type="radio" name="sex" value="female"> female
-            </label>
+        <div style="color:red;">
+            <spring:hasBindErrors name="user">
+                <c:if test="${errors.hasFieldErrors('age')}">
+                    ${errors.getFieldError('age').defaultMessage}
+                </c:if>
+            </spring:hasBindErrors>
         </div>
+
+        <div class="form-floating">
+            <input type="email" name="email" class="form-control" id="inputEmail" placeholder="Email" value="${user.email}">
+            <label for="inputEmail">Email</label>
+        </div>
+        <div style="color:red;">
+            <spring:hasBindErrors name="user">
+                <c:if test="${errors.hasFieldErrors('email')}">
+                    ${errors.getFieldError('email').defaultMessage}
+                </c:if>
+            </spring:hasBindErrors>
+        </div>
+
+        <%-- ENUM 활용 --%>
+        <div class="form-floating" >
+            <select id="bloodTypeId" name="bloodType" style="padding: 10px;border-radius: 15px;margin-top: 15px;">
+                <option value="">Choose BloodType</option>
+                <c:forEach items="${bloodTypes}" var="bloodType">
+                    <option value="${bloodType}">${bloodType.description}</option>
+                </c:forEach>
+            </select>
+        </div>
+        <div style="color:red;">
+            <spring:hasBindErrors name="user">
+                <c:if test="${errors.hasFieldErrors('bloodType')}">
+                    ${errors.getFieldError('bloodType').defaultMessage}
+                </c:if>
+            </spring:hasBindErrors>
+        </div>
+
+        <%-- Map 활용 --%>
+        <div class="form-check" style="padding: 20px; font-size: 17px;">
+            <c:forEach items="${sex}" var="entry">
+                <label>
+                    <input type="radio" name="sex" value="${entry.key}"> ${entry.value}
+                </label>
+            </c:forEach>
+        </div>
+        <div style="color:red;">
+            <spring:hasBindErrors name="user">
+                <c:if test="${errors.hasFieldErrors('sex')}">
+                    ${errors.getFieldError('sex').defaultMessage}
+                </c:if>
+            </spring:hasBindErrors>
+        </div>
+
         <button class="w-100 btn btn-lg btn-primary" type="submit">Sign Up</button>
+
     </form>
+
 </main>
 
 <script src="/js/login.js"></script>
+
+<script>
+
+    document.getElementById("bloodTypeId").value = "${user.bloodType}";
+
+    document.getElementsByName("sex").forEach(v => {
+        if (v.value === "${user.sex}") {
+            v.checked = true;
+        }
+    })
+
+</script>
 
 </body>
 </html>
