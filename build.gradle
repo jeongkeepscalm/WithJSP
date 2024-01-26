@@ -29,7 +29,7 @@ dependencies {
 
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
 
-	// @Getter, @Setter, @RequiredArgsConstructor, @ToString ...
+	// Lombok : @Getter, @Setter, @RequiredArgsConstructor, @ToString ...
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 
