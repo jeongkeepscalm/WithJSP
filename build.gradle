@@ -28,8 +28,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+    testImplementation 'junit:junit:4.13.1'
 
-	// Lombok : @Getter, @Setter, @RequiredArgsConstructor, @ToString ...
+    // Lombok : @Getter, @Setter, @RequiredArgsConstructor, @ToString ...
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 

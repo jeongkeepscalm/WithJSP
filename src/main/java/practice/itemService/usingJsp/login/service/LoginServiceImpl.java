@@ -36,7 +36,13 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public boolean deleteUser(String id) {
-        return loginMapper.deleteUser(id) > 0 ? true : false;
+        try {
+            return loginMapper.deleteUser(id) > 0 ? true : false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
     }
 
     @Override

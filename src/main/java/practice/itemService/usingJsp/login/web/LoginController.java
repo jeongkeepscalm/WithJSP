@@ -16,7 +16,6 @@ import java.util.Map;
 
 @Slf4j
 @Controller
-@RequestMapping("/login")
 public class LoginController {
 
     @ModelAttribute("bloodTypes")

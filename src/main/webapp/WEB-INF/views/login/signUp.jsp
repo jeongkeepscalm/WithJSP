@@ -15,7 +15,7 @@
 
     <link rel="canonical" href="https://getbootstrap.kr/docs/5.2/examples/sign-in/">
 
-    <link href="/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Favicons -->
     <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" sizes="180x180">
