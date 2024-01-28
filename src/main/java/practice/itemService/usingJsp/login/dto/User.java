@@ -13,9 +13,8 @@ public class User {
     private String password;
     private String name;
     private Integer age;
-
-    private BloodType bloodType;
-    private List<String> sex;
-
+    private String bloodType;
+    private String sex;
+    private String email;
 
 }

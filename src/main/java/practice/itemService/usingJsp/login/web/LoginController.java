@@ -7,6 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import practice.itemService.usingJsp.login.dto.BloodType;
 import practice.itemService.usingJsp.login.dto.SaveUserRequest;
 
@@ -15,6 +16,7 @@ import java.util.Map;
 
 @Slf4j
 @Controller
+@RequestMapping("/login")
 public class LoginController {
 
     @ModelAttribute("bloodTypes")
@@ -43,8 +45,7 @@ public class LoginController {
     @PostMapping("/signUp.cm")
     public String signUp(
             @Validated @ModelAttribute("user") SaveUserRequest saveUserRequest
-            , BindingResult bindingResult
-    ) {
+            , BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             return "login/signUp";
@@ -52,5 +53,9 @@ public class LoginController {
 
         return null;
     }
+
+
+
+
 }
 

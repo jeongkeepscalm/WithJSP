@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="practice.itemService.usingJsp.login.mapper.LoginMapper">
+
+    <select id="selectAllUser" resultType="practice.itemService.usingJsp.login.dto.User">
+        SELECT
+            id, password, name, sex, age, email, bloodType
+        FROM user
+    </select>
+
+    <select id="selectAllUserCount" resultType="java.lang.Integer">
+        select count(1) from user
+    </select>
+
+    <insert id="insertUser">
+        INSERT INTO user
+            (id, password, name, sex, age, email, bloodType)
+        VALUES
+            (#{id}, #{password}, #{name}, #{sex}, #{age}, #{email}, #{bloodType})
+    </insert>
+
+    <select id="selectUserDetail" resultType="practice.itemService.usingJsp.login.dto.User">
+        SELECT
+            id, password, name, sex, age, email, bloodType
+        FROM user
+        where id = #{id}
+    </select>
+
+    <delete id="deleteUser">
+        delete from user where id = #{id}
+    </delete>
+
+    <update id="updateUser">
+        UPDATE user
+        SET
+            password = #{password}
+            , name = #{name}
+            , sex = #{sex}
+            , age = #{age}
+            , bloodType = #{bloodType}
+            , email = #{email}
+        WHERE id = #{id}
+    </update>
+
+
+
+</mapper>

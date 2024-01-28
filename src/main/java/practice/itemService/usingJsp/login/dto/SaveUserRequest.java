@@ -31,7 +31,20 @@ public class SaveUserRequest {
     private String sex;
 
     @NotBlank(message = "* 이메일을 입력해주세요.")
+    @Pattern(regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,6}$", message = "* 이메일 형식에 맞지 않습니다.")
     private String email;
+
+    public SaveUserRequest(){};
+
+    public SaveUserRequest(String id, String password, String name, Integer age, String bloodType, String sex, String email) {
+        this.id = id;
+        this.password = password;
+        this.name = name;
+        this.age = age;
+        this.bloodType = bloodType;
+        this.sex = sex;
+        this.email = email;
+    }
 
     // Integer type 인데 문자열을 입력했을 경우를 위한 코드..
     public void setAge(String age) {
