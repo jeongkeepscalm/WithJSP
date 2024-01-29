@@ -43,6 +43,14 @@
         WHERE id = #{id}
     </update>
 
+    <select id="checkIfUser" resultType="practice.itemService.usingJsp.login.dto.User">
+        SELECT
+            id, password, name, sex, age, email, bloodType
+        FROM user
+        where 1=1
+            and id = #{id}
+            and password = #{password}
+    </select>
 
 
 </mapper>

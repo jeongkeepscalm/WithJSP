@@ -1,4 +1,4 @@
-package practice.itemService.usingJsp.login.web;
+package practice.itemService.usingJsp.login;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;

@@ -3,6 +3,7 @@ package practice.itemService.usingJsp.login.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import practice.itemService.usingJsp.login.dto.LoginRequest;
 import practice.itemService.usingJsp.login.dto.SaveUserRequest;
 import practice.itemService.usingJsp.login.dto.User;
 import practice.itemService.usingJsp.login.mapper.LoginMapper;
@@ -49,5 +50,11 @@ public class LoginServiceImpl implements LoginService {
     public boolean updateUser(SaveUserRequest saveUserRequest) {
         return loginMapper.updateUser(saveUserRequest) > 0 ? true : false;
     }
+
+    @Override
+    public User checkIfUser(LoginRequest loginRequest) {
+        return loginMapper.checkIfUser(loginRequest);
+    }
+
 
 }

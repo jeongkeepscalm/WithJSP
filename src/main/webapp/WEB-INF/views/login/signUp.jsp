@@ -107,7 +107,7 @@
 <body class="text-center">
 
 <main class="form-signin w-100 m-auto">
-    <form action="/signUp.cm" name="loginForm" method="post">
+    <form action="/signUp.cm" name="signUpForm" method="post">
 
         <h1 class="h3 mb-3 fw-normal">Sign Up</h1>
 
@@ -206,6 +206,7 @@
 
         <button class="w-100 btn btn-lg btn-primary" type="submit">Sign Up</button>
 
+        <input class="w-100 btn btn-lg btn-primary" id="goBackHomeButton" type="button" style="margin-top: 10px" value="Go Back Home">
     </form>
 
 </main>
@@ -220,6 +221,10 @@
         if (v.value === "${user.sex}") {
             v.checked = true;
         }
+    })
+
+    document.getElementById("goBackHomeButton").addEventListener("click", () => {
+        location.href = "/login";
     })
 
 </script>

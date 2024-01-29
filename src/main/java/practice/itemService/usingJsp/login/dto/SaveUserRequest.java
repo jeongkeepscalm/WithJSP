@@ -4,6 +4,7 @@ import jakarta.validation.constraints.*;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.constraints.Range;
+import practice.itemService.usingJsp.exception.CustomNumberFormatException;
 
 @Data
 @Slf4j
@@ -47,11 +48,12 @@ public class SaveUserRequest {
     }
 
     // Integer type 인데 문자열을 입력했을 경우를 위한 코드..
-    public void setAge(String age) {
-        try {
-            this.age = Integer.parseInt(age);
-        } catch (NumberFormatException e) {
-            log.info("e : {}", e);
-        }
-    }
+//    public void setAge(String age) {
+//        try {
+//            this.age = Integer.parseInt(age);
+//        } catch (NumberFormatException e) {
+//
+//        }
+//    }
+
 }

@@ -1,3 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <!doctype html>
 <html lang="ko">
@@ -83,29 +87,53 @@
 <body class="text-center">
 
 <main class="form-signin w-100 m-auto">
-    <form action="/signUp.cm" name="loginForm">
+    <form action="/login" name="loginForm" method="post" >
         <img class="mb-4" src="/images/member.jpg" alt="" width="200" height="100">
         <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
         <div class="form-floating">
-            <input type="test" class="form-control" id="floatingInput" placeholder="id">
+            <input type="test" class="form-control" name="id" id="floatingInput" placeholder="id" value="${user.id}">
             <label for="floatingInput">Id</label>
         </div>
+        <div style="color:red;">
+            <spring:hasBindErrors name="user">
+                <c:if test="${errors.hasFieldErrors('id')}">
+                    ${errors.getFieldError('id').defaultMessage}
+                </c:if>
+            </spring:hasBindErrors>
+        </div>
+
         <div class="form-floating">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+            <input type="password" class="form-control" name="password" id="floatingPassword" placeholder="Password" value="${user.password}">
             <label for="floatingPassword">Password</label>
+        </div>
+        <div style="color:red;">
+            <spring:hasBindErrors name="user">
+                <c:if test="${errors.hasFieldErrors('password')}">
+                    ${errors.getFieldError('password').defaultMessage}
+                </c:if>
+            </spring:hasBindErrors>
         </div>
 
         <div class="checkbox mb-3">
-            <label>
+            <label style="font-size: 20px;">
                 <input type="checkbox" value="remember-me"> Remember me
             </label>
         </div>
         <button class="w-100 btn btn-lg btn-primary" type="submit">Sign In</button>
+        <input type="button" id="signInButton" class="w-100 btn btn-lg btn-primary" style="margin-top: 10px" value="Sign Up">
     </form>
 </main>
 
 <script src="/js/login.js"></script>
+
+<script>
+    document.getElementById("signInButton").addEventListener("click", () => {
+        document.loginForm.action = "/signUp.cm";
+        document.loginForm.method = "get";
+        document.loginForm.submit();
+    })
+</script>
 
 </body>
 </html>

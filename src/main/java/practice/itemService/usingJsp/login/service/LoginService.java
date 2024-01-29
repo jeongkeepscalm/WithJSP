@@ -1,6 +1,7 @@
 package practice.itemService.usingJsp.login.service;
 
 import org.springframework.stereotype.Service;
+import practice.itemService.usingJsp.login.dto.LoginRequest;
 import practice.itemService.usingJsp.login.dto.SaveUserRequest;
 import practice.itemService.usingJsp.login.dto.User;
 
@@ -27,8 +28,8 @@ public interface LoginService {
     // 회원 정보 수정
     boolean updateUser(SaveUserRequest saveUserRequest);
 
-
-
+    // 회원인지 확인
+    User checkIfUser(LoginRequest loginRequest);
 
 
 }

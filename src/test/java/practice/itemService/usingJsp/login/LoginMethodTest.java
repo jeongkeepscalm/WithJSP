@@ -11,8 +11,9 @@ import practice.itemService.usingJsp.login.service.LoginServiceImpl;
 import java.util.List;
 
 @SpringBootTest // 매소드 테스트
-public class LoginTest {
+public class LoginMethodTest {
 
+    // 메소드 테스트의 경우, 보통 mapper 에 주입시켜 mapper 로 테스트한다.
     @Autowired
     LoginServiceImpl loginService;
 

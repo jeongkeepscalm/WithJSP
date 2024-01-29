@@ -1,6 +1,7 @@
 package practice.itemService.usingJsp.login.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import practice.itemService.usingJsp.login.dto.LoginRequest;
 import practice.itemService.usingJsp.login.dto.SaveUserRequest;
 import practice.itemService.usingJsp.login.dto.User;
 
@@ -26,6 +27,9 @@ public interface LoginMapper {
 
     // 회원 정보 수정
     int updateUser(SaveUserRequest saveUserRequest);
+
+    // 회원인지 확인
+    User checkIfUser(LoginRequest loginRequest);
 
 
 
