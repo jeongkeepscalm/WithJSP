@@ -52,8 +52,6 @@ public class LoginController {
             , @RequestParam(defaultValue = "/main") String redirectURL
             , HttpServletRequest request) {
 
-        String redirectURL1 = request.getParameter("redirectURL");
-
         if (bindingResult.hasErrors()) {
             return "login/loginForm";
         }
@@ -83,8 +81,8 @@ public class LoginController {
     }
 
     // 로그아웃
-    @PostMapping("/logOut")
-    public String logOut(HttpServletRequest httpServletRequest) {
+    @PostMapping("/logout")
+    public String logout(HttpServletRequest httpServletRequest) {
         HttpSession session = httpServletRequest.getSession(false);
         if (session != null) {
             session.invalidate();

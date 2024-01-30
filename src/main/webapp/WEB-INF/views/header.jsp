@@ -13,7 +13,7 @@
                     <c:when test="${sessionScope.loginUser ne null}">
                         <li class="nav-item"><a class="nav-link" id="greetingId" style="font-weight: bold">${sessionScope.loginUser.name}님 안녕하세요 ^^</a></li>
 <%--                        <li class="nav-item"><a class="nav-link" id="extendLoginId" style="font-weight: bold; cursor: pointer" >Extend Login Time</a></li>--%>
-                        <li class="nav-item"><a class="nav-link" id="logOutId" style="font-weight: bold; cursor: pointer">LogOut</a></li>
+                        <li class="nav-item"><a class="nav-link" id="logoutId" style="font-weight: bold; cursor: pointer">Log Out</a></li>
                         <li class="nav-item"><a class="nav-link" id="myPageId" style="font-weight: bold; cursor: pointer">MyPage</a></li>
                     </c:when>
                     <c:otherwise>
