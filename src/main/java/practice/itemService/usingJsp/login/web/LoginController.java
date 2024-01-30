@@ -45,7 +45,6 @@ public class LoginController {
         return map;
     }
 
-
     @GetMapping("/login")
     public String loginForm() {
         return "login/loginForm";
@@ -83,9 +82,6 @@ public class LoginController {
         return "main";
 
     }
-
-    @PostMapping()
-
 
     @GetMapping("/signUp.cm")
     public String signUpForm() {

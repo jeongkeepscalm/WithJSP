@@ -87,7 +87,7 @@
 <body class="text-center">
 
 <main class="form-signin w-100 m-auto">
-    <form action="/login" name="loginForm" method="post" >
+    <form action="/login" name="loginForm" method="post">
         <img class="mb-4" src="/images/member.jpg" alt="" width="200" height="100">
         <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
@@ -129,9 +129,7 @@
 
 <script>
     document.getElementById("signInButton").addEventListener("click", () => {
-        document.loginForm.action = "/signUp.cm";
-        document.loginForm.method = "get";
-        document.loginForm.submit();
+        location.href = "/signUp.cm";
     })
 </script>
 

@@ -2,6 +2,15 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.2.2'
 	id 'io.spring.dependency-management' version '1.1.4'
+	id 'war'
+}
+
+bootWar {
+	enabled = true
+}
+
+bootJar {
+	launchScript ()
 }
 
 group = 'practice.itemService'
@@ -22,6 +31,8 @@ repositories {
 }
 
 dependencies {
+
+	implementation 'org.springframework.boot:spring-boot-starter-tomcat'
 
 	// 내장 톰캣 서버를 사용하여 스프링 부트 애플리케이션을 실행 ( 톰캣 : 웹 요청을 처리하고 응답을 반환하는 서블릿 컨테이너 )
 	// 웹 애플리케이션 개발에 유용한 다양한 기능과 라이브러리를 포함 ( Jackson, Hibernate Validator 등.. )
