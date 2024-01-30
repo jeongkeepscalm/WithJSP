@@ -11,10 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import practice.itemService.usingJsp.SessionConst;
 import practice.itemService.usingJsp.login.dto.BloodType;
 import practice.itemService.usingJsp.login.dto.LoginRequest;
@@ -45,6 +42,7 @@ public class LoginController {
         return map;
     }
 
+    // 로그인
     @GetMapping("/login")
     public String loginForm() {
         return "login/loginForm";
@@ -53,6 +51,7 @@ public class LoginController {
     @PostMapping("/login")
     public String loginProcess(@Valid @ModelAttribute("user") LoginRequest loginRequest
             , BindingResult bindingResult
+            , @RequestParam(defaultValue = "/main") String redirectURL
             , HttpServletRequest request) {
 
         if (bindingResult.hasErrors()) {
@@ -79,16 +78,27 @@ public class LoginController {
          * 서버에서는 해당 쿠키 정보로 세션저장소를 조회하여 보관한 유저 정보를 사용한다.
          * */
 
-        return "main";
+        return "redirect:" + redirectURL;
 
     }
 
-    @GetMapping("/signUp.cm")
+    // 로그아웃
+    @PostMapping("/logOut")
+    public String logOut(HttpServletRequest httpServletRequest) {
+        HttpSession session = httpServletRequest.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        return "redirect:/login";
+    }
+
+    // 회원등록
+    @GetMapping("/signUp")
     public String signUpForm() {
         return "login/signUp";
     }
 
-    @PostMapping("/signUp.cm")
+    @PostMapping("/signUp")
     public String signUp(
             @Validated @ModelAttribute("user") SaveUserRequest saveUserRequest
             , BindingResult bindingResult) {
@@ -109,12 +119,11 @@ public class LoginController {
         return "redirect:/";
     }
 
-
-    @GetMapping("/main.cm")
+    // 메인 페이지
+    @GetMapping("/main")
     public String mainPage() {
         return "main";
     }
-
 
 
 

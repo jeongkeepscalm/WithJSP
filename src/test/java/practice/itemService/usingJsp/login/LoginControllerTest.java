@@ -26,7 +26,7 @@ class LoginControllerTest {
     // Controller
     @Test
     void signUp() throws Exception {
-        ResultActions result = mockMvc.perform(post("/signUp.cm")
+        ResultActions result = mockMvc.perform(post("/signUp")
                 .param("id", "spring2")
                 .param("password", "spring1234")
                 .param("name", "spring")

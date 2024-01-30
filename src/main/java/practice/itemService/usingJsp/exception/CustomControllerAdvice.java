@@ -3,12 +3,11 @@ package practice.itemService.usingJsp.exception;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.TypeMismatchException;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @org.springframework.web.bind.annotation.ControllerAdvice
 @RequiredArgsConstructor
-public class ControllerAdvice {
+public class CustomControllerAdvice {
 
     @ExceptionHandler(TypeMismatchException.class)
     public void typeMismatchException() {

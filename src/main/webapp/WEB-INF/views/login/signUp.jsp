@@ -107,7 +107,7 @@
 <body class="text-center">
 
 <main class="form-signin w-100 m-auto">
-    <form action="/signUp.cm" name="signUpForm" method="post">
+    <form action="/signUp" name="signUpForm" method="post">
 
         <h1 class="h3 mb-3 fw-normal">Sign Up</h1>
 

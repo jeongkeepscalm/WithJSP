@@ -7,3 +7,4 @@ document.getElementById("logOutId").addEventListener("click", function() {
     document.headerForm.action = "/logOut";
     document.headerForm.submit();
 })
+

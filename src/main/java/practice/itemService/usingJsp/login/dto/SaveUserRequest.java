@@ -1,6 +1,7 @@
 package practice.itemService.usingJsp.login.dto;
 
 import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.constraints.Range;
@@ -8,6 +9,7 @@ import practice.itemService.usingJsp.exception.CustomNumberFormatException;
 
 @Data
 @Slf4j
+@AllArgsConstructor
 public class SaveUserRequest {
 
     @NotBlank(message = "* 아이디를 입력해주세요.")
@@ -37,23 +39,6 @@ public class SaveUserRequest {
 
     public SaveUserRequest(){};
 
-    public SaveUserRequest(String id, String password, String name, Integer age, String bloodType, String sex, String email) {
-        this.id = id;
-        this.password = password;
-        this.name = name;
-        this.age = age;
-        this.bloodType = bloodType;
-        this.sex = sex;
-        this.email = email;
-    }
 
-    // Integer type 인데 문자열을 입력했을 경우를 위한 코드..
-//    public void setAge(String age) {
-//        try {
-//            this.age = Integer.parseInt(age);
-//        } catch (NumberFormatException e) {
-//
-//        }
-//    }
 
 }

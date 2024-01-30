@@ -129,7 +129,7 @@
 
 <script>
     document.getElementById("signInButton").addEventListener("click", () => {
-        location.href = "/signUp.cm";
+        location.href = "/signUp";
     })
 </script>
 
