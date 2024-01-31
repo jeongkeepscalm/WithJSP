@@ -53,7 +53,7 @@
                                     <li>
                                         <a href="#"
                                            class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                                            onclick="getPosts('${lv2.menuUrl}');">
+                                            onclick="getPosts('${lv2.menuUrl}', '${lv2.menuName}');">
                                                 ${lv2.menuName}
                                         </a>
                                     </li>
@@ -71,7 +71,7 @@
         <jsp:include page="header.jsp"></jsp:include>
 
         <div class="container-fluid">
-            <h1 class="mt-4">test</h1>
+            <h1 class="mt-4" id="titleId" style="font-weight: 600 !important; color: #0d6efd;"></h1>
             <br>
             <iframe id="frameId" name="id_name" width="800" height="400" scrolling="no" frameBorder="0" ></iframe>
         </div>
@@ -80,7 +80,10 @@
 
 <script>
 
-    const getPosts = function(menuUrl) {
+    const getPosts = function(menuUrl, menuName) {
+
+        document.getElementById("titleId").innerText = menuName;
+
         let boardFrame = document.getElementById("frameId");
         if (menuUrl) {
             boardFrame.src = menuUrl;
