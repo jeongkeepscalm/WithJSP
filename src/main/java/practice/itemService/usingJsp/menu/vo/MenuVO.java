@@ -15,5 +15,6 @@ public class MenuVO {
     private Integer menuDepth;
     private String usedAt;
     private String menuName;
+    private String menuUrl;
 
 }

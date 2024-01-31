@@ -43,8 +43,7 @@
                     <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
                             data-bs-toggle="collapse"
                             aria-expanded="true"
-                            data-bs-target="#menuId${lv1.menuId}"
-                            onclick="clickOneDepth(this, ${lv1.menuId});">
+                            data-bs-target="#menuId${lv1.menuId}">
                             ${lv1.menuName}
                     </button>
                     <div class="collapse" id="menuId${lv1.menuId}">
@@ -52,7 +51,9 @@
                             <c:forEach items="${menuDepth2}" var="lv2">
                                 <c:if test="${lv1.menuId eq lv2.parentMenuId}">
                                     <li>
-                                        <a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">
+                                        <a href="#"
+                                           class="link-body-emphasis d-inline-flex text-decoration-none rounded"
+                                            onclick="getPosts('${lv2.menuUrl}');">
                                                 ${lv2.menuName}
                                         </a>
                                     </li>
@@ -72,38 +73,21 @@
         <div class="container-fluid">
             <h1 class="mt-4">test</h1>
             <br>
-            <iframe id="noticeFrame" name="id_name" width="800" height="400" scrolling="no" frameBorder="0" ></iframe>
+            <iframe id="frameId" name="id_name" width="800" height="400" scrolling="no" frameBorder="0" ></iframe>
         </div>
     </div>
 </div>
 
 <script>
-    // function fnLoadBoard(menu) {
-    //     var boardFrame = document.getElementById("noticeFrame");
-    //
-    //     // 메뉴 URL
-    //     var menuUrls = {
-    //         'notice': '/notice',
-    //         'freeBoard': '/free',
-    //         'sugquest': '/sugquest',
-    //         'admin': '/admin'
-    //     };
-    //
-    //     var menuUrl = menuUrls[menu];
-    //     if (menuUrl) {
-    //         boardFrame.src = menuUrl;
-    //     }
-    // }
 
-
-    // const clickOneDepth = function(e, menuId) {
-    //     e.setAttribute("data-bs-target", "#menuId"+menuId);
-    //     e.nextSibling.nextSibling.id = "menuId"+menuId;
-    //
-    // }
+    const getPosts = function(menuUrl) {
+        let boardFrame = document.getElementById("frameId");
+        if (menuUrl) {
+            boardFrame.src = menuUrl;
+        }
+    }
 
 </script>
-
 
 </body>
 </html>

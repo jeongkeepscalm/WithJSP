@@ -5,7 +5,6 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.TypeMismatchException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -117,12 +116,6 @@ public class LoginController {
 
         return "redirect:/";
     }
-
-    @GetMapping("/test")
-    public void test() throws TypeMismatchException {
-        throw new NullPointerException();
-    }
-
 
 
 }
