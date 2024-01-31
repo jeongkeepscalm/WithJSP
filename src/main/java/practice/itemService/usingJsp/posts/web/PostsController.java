@@ -13,4 +13,9 @@ public class PostsController {
         return "posts/greeting";
     }
 
+    @GetMapping("/contact")
+    public String contact() {
+        return "posts/contact";
+    }
+
 }
