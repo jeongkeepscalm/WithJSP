@@ -7,6 +7,8 @@ import practice.itemService.usingJsp.login.dto.LoginRequest;
 import practice.itemService.usingJsp.login.dto.SaveUserRequest;
 import practice.itemService.usingJsp.login.dto.User;
 import practice.itemService.usingJsp.login.mapper.LoginMapper;
+import practice.itemService.usingJsp.menu.vo.MenuVO;
+
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -54,6 +56,11 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public User checkIfUser(LoginRequest loginRequest) {
         return loginMapper.checkIfUser(loginRequest);
+    }
+
+    @Override
+    public List<MenuVO> selectAllMenu() {
+        return null;
     }
 
 

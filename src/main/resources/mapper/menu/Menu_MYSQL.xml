@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="practice.itemService.usingJsp.menu.mapper.MenuMapper">
+
+    <select id="selectAllMenu" resultType="practice.itemService.usingJsp.menu.vo.MenuVO">
+        with recursive t3 as(
+            select
+                t1.id as menuId
+                 , t1.parent_id as parentMenuId
+                 , t1.name as menuName
+                 , t1.sort as sort
+                 , t1.used_at as usedAt
+                 , t1.depth as menuDepth
+            from menu t1
+            where parent_id = 0
+            union all
+            select
+                t2.id
+                 , t2.parent_id
+                 , CONCAT_WS(' > ', t3.menuName, t2.name)
+                 , t2.sort as sort
+                 , t2.used_at as usedAt
+                 , t2.depth as menuDepth
+            from menu t2
+                     inner join t3 on t3.menuId = t2.parent_id
+        )
+        select
+            t3.menuId
+             , t3.parentMenuId
+             , t3.menuName
+             , t3.sort
+             , t3.menuDepth
+        from t3
+        where t3.usedAt = 'Y'
+        order by t3.parentMenuId asc, t3.sort asc
+    </select>
+
+
+</mapper>

@@ -148,7 +148,7 @@
         </div>
 
         <div class="form-floating">
-            <input type="text" class="form-control" name="age" id="inputAge" placeholder="Age" value="${user.age}">
+            <input type="number" class="form-control" name="age" id="inputAge" placeholder="Age" value="${user.age}">
             <label for="inputAge">Age</label>
         </div>
         <div style="color:red;">

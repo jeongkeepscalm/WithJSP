@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import practice.itemService.usingJsp.login.dto.LoginRequest;
 import practice.itemService.usingJsp.login.dto.SaveUserRequest;
 import practice.itemService.usingJsp.login.dto.User;
+import practice.itemService.usingJsp.menu.vo.MenuVO;
 
 import java.util.List;
 
@@ -30,6 +31,9 @@ public interface LoginService {
 
     // 회원인지 확인
     User checkIfUser(LoginRequest loginRequest);
+
+    // 모든 메뉴 조회
+    List<MenuVO> selectAllMenu();
 
 
 }

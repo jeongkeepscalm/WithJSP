@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!doctype html>
 <html lang="en">
@@ -19,6 +20,7 @@
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
 
+
     <link href="/css/sidebars.css" rel="stylesheet">
 </head>
 <body>
@@ -28,63 +30,38 @@
     <div class="b-example-divider b-example-vr"></div>
 
     <div class="flex-shrink-0 p-3" style="width: 280px;">
-        <a href="/main.cm" class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
+        <a href="/main" class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
             <svg class="bi pe-none me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
             <span class="fs-5 fw-semibold">Practice</span>
         </a>
         <ul class="list-unstyled ps-0">
-            <li class="mb-1">
-                <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
-                    Home
-                </button>
-                <div class="collapse show" id="home-collapse">
-                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                        <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Overview</a></li>
-                        <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Updates</a></li>
-                        <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Reports</a></li>
-                    </ul>
-                </div>
-            </li>
-            <li class="mb-1">
-                <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
-                    Dashboard
-                </button>
-                <div class="collapse" id="dashboard-collapse">
-                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                        <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Overview</a></li>
-                        <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Weekly</a></li>
-                        <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Monthly</a></li>
-                        <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Annually</a></li>
-                    </ul>
-                </div>
-            </li>
-            <li class="mb-1">
-                <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
-                    Orders
-                </button>
-                <div class="collapse" id="orders-collapse">
-                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                        <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">New</a></li>
-                        <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Processed</a></li>
-                        <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Shipped</a></li>
-                        <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Returned</a></li>
-                    </ul>
-                </div>
-            </li>
-            <li class="border-top my-3"></li>
-            <li class="mb-1">
-                <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
-                    Account
-                </button>
-                <div class="collapse" id="account-collapse">
-                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                        <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">New...</a></li>
-                        <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Profile</a></li>
-                        <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Settings</a></li>
-                        <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Sign out</a></li>
-                    </ul>
-                </div>
-            </li>
+
+            <span id="menuArea"></span>
+
+            <c:forEach items="${menuDepth1}" var="lv1">
+                <li class="mb-1" id="liId${lv1.menuId}" >
+                    <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+                            data-bs-toggle="collapse"
+                            aria-expanded="true"
+                            data-bs-target="#menuId${lv1.menuId}"
+                            onclick="clickOneDepth(this, ${lv1.menuId});">
+                            ${lv1.menuName}
+                    </button>
+                    <div class="collapse" id="menuId${lv1.menuId}">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <c:forEach items="${menuDepth2}" var="lv2">
+                                <c:if test="${lv1.menuId eq lv2.parentMenuId}">
+                                    <li>
+                                        <a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">
+                                                ${lv2.menuName}
+                                        </a>
+                                    </li>
+                                </c:if>
+                            </c:forEach>
+                        </ul>
+                    </div>
+                </li>
+            </c:forEach>
         </ul>
     </div>
 
@@ -101,23 +78,32 @@
 </div>
 
 <script>
-    function fnLoadBoard(menu) {
-        var boardFrame = document.getElementById("noticeFrame");
+    // function fnLoadBoard(menu) {
+    //     var boardFrame = document.getElementById("noticeFrame");
+    //
+    //     // 메뉴 URL
+    //     var menuUrls = {
+    //         'notice': '/notice',
+    //         'freeBoard': '/free',
+    //         'sugquest': '/sugquest',
+    //         'admin': '/admin'
+    //     };
+    //
+    //     var menuUrl = menuUrls[menu];
+    //     if (menuUrl) {
+    //         boardFrame.src = menuUrl;
+    //     }
+    // }
 
-        // 메뉴 URL
-        var menuUrls = {
-            'notice': '/notice',
-            'freeBoard': '/free',
-            'sugquest': '/sugquest',
-            'admin': '/admin'
-        };
 
-        var menuUrl = menuUrls[menu];
-        if (menuUrl) {
-            boardFrame.src = menuUrl;
-        }
-    }
+    // const clickOneDepth = function(e, menuId) {
+    //     e.setAttribute("data-bs-target", "#menuId"+menuId);
+    //     e.nextSibling.nextSibling.id = "menuId"+menuId;
+    //
+    // }
+
 </script>
+
 
 </body>
 </html>

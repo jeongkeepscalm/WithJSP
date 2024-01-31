@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.TypeMismatchException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -49,7 +50,7 @@ public class LoginController {
     @PostMapping("/login")
     public String loginProcess(@Valid @ModelAttribute("user") LoginRequest loginRequest
             , BindingResult bindingResult
-            , @RequestParam(defaultValue = "/main") String redirectURL
+            , @RequestParam(name = "redirectURL", defaultValue = "/main") String redirectURL
             , HttpServletRequest request) {
 
         if (bindingResult.hasErrors()) {
@@ -117,10 +118,9 @@ public class LoginController {
         return "redirect:/";
     }
 
-    // 메인 페이지
-    @GetMapping("/main")
-    public String mainPage() {
-        return "main";
+    @GetMapping("/test")
+    public void test() throws TypeMismatchException {
+        throw new NullPointerException();
     }
 
 
