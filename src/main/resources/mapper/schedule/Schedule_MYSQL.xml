@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="practice.itemService.usingJsp.practice.itemService.usingJsp.posts.schedule.mapper.ScheduleMapper">
+
+    <!-- 당해년도 일정목록을 가져온다. -->
+    <select id="selectThisMonthSchedule" resultType="practice.itemService.usingJsp.posts.schedule.dto.ScheduleRes">
+        select
+            s.title
+             , s.start_date as startDate
+             , s.end_date as endDate
+        from schedule s
+        where 1=1
+            and month(s.start_date) = #{month}
+    </select>
+
+</mapper>

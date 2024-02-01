@@ -20,7 +20,6 @@
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
 
-
     <link href="/css/sidebars.css" rel="stylesheet">
 </head>
 <body>
@@ -73,7 +72,7 @@
         <div class="container-fluid">
             <h1 class="mt-4" id="titleId" style="font-weight: 600 !important; color: #0d6efd;"></h1>
             <br>
-            <iframe id="frameId" name="id_name" width="800" height="400" scrolling="no" frameBorder="0" ></iframe>
+            <iframe id="frameId" name="id_name" width="800" height="800" scrolling="no" frameBorder="0" ></iframe>
         </div>
     </div>
 </div>

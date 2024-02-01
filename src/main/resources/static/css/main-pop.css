@@ -1,0 +1,31 @@
+@charset "UTF-8";
+
+/*POP-UP*/
+.modal-popup-main{display: none;position: fixed;top: 0;left: 0;width:100%;height:100%;overflow-x: hidden;overflow-y: auto;background:rgba(0,0,0,.65);z-index:110000;}
+.modal-dialog-main {position: relative;display: flex;align-items: center;min-height: calc(100% - (1.5rem * 2));max-width:1350px;z-index:200000;margin: 1.5rem auto;pointer-events: none;font-size:0.875rem;}
+.modal-content-main{flex:1;position: relative; margin: 0 1rem;background-clip: padding-box;outline: 0 none;pointer-events: auto;}
+.modal-header-main {display: block;position:relative;padding:30px 30px 0 30px;}
+.modal-body-main {position: relative;}
+.modal-footer-main {display: -ms-flexbox;display: flex;-ms-flex-align: center;align-items: center;-ms-flex-pack: end;justify-content: center;padding: 30px;}
+.modal-dim{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.75);z-index:120000;}
+.modal-popup-main.fade .modal-dialog {transition: -webkit-transform .5s ease-out;transition: transform .5s ease-out;transition: transform .5s ease-out,-webkit-transform .5s ease-out;-webkit-transform: translate(0,-100px);transform: translate(0,-100px);}
+.modal-popup-main.show .modal-dialog{-webkit-transform: none;transform: none;}
+.pop-box{display:flex;justify-content:center;}
+.pop-box .banner-box{flex:1;max-width:650px;}
+.pop-box .img-box{position:relative;/*padding-bottom:62.5%;*/border:1px solid #000;border-bottom:none;overflow:hidden;font-size:0;}
+/* .img-inner{position:absolute;top:0;left:0;width:100%;height:100%;} */
+.pop-box .img-box img{width: 100%;height: 100%;object-fit: contain;}
+.pop-box .banner-box:first-child{margin-right:30px;}
+.banner-foot{display:flex;padding:16px 30px;border:1px solid #000;border-top:none;background:#fff;color:#000;}
+.banner-foot button{padding:0;cursor:pointer;font-size:16px;color:#333;}
+.popclose{position:relative;margin-left:auto;}
+.popclose:before{content:'';position:absolute;top:3px;left:-30px;width:1px;height:15px;vertical-align: middle;background:#d0d0d0;}
+
+@media screen and (max-width:1000px){
+    .pop-box{flex-direction:column;align-items: center;}
+    .pop-box .banner-box:first-child{margin-right:0;margin-bottom:10px;}
+    .banner-foot{padding:10px 15px;font-size:13px;}
+    .popclose:before{left:-15px;top:2px;margin-right:5px;}
+    .banner-foot button{font-size:13px;}
+}
+

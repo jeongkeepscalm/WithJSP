@@ -1,4 +1,4 @@
-package practice.itemService.usingJsp.posts.web;
+package practice.itemService.usingJsp.posts;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,9 +13,15 @@ public class PostsController {
         return "posts/greeting";
     }
 
+    // 오시는 길
     @GetMapping("/contact")
     public String contact() {
         return "posts/contact";
     }
 
+
+    @GetMapping("/schedule")
+    public String schedule() {
+        return "posts/schedule";
+    }
 }
