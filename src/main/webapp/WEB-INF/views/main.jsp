@@ -21,6 +21,8 @@
     <link href="css/styles.css" rel="stylesheet" />
 
     <link href="/css/sidebars.css" rel="stylesheet">
+
+
 </head>
 <body>
 <div class="d-flex" id="wrapper">
@@ -72,7 +74,7 @@
         <div class="container-fluid">
             <h1 class="mt-4" id="titleId" style="font-weight: 600 !important; color: #0d6efd;"></h1>
             <br>
-            <iframe id="frameId" name="id_name" width="800" height="800" scrolling="no" frameBorder="0" ></iframe>
+            <iframe id="frameId" name="id_name" scrolling="no" frameBorder="0" ></iframe>
         </div>
     </div>
 </div>
@@ -84,6 +86,13 @@
         document.getElementById("titleId").innerText = menuName;
 
         let boardFrame = document.getElementById("frameId");
+        if (menuUrl === '/schedule') {
+            boardFrame.width = "1300";
+            boardFrame.height = "1000";
+        } else {
+            boardFrame.width = "800";
+            boardFrame.height = "800";
+        }
         if (menuUrl) {
             boardFrame.src = menuUrl;
         }

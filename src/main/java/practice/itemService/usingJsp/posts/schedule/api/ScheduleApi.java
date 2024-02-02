@@ -23,8 +23,27 @@ public class ScheduleApi {
 
     @ResponseBody
     @PostMapping(value = "/selectSchedule")
-    public ResponseEntity getSchedule(@RequestBody ScheduleReq scheduleReq) {
-        List<ScheduleRes> scheduleRes = scheduleService.selectThisMonthSchedule(scheduleReq.getMonth());
+    public ResponseEntity getSchedule() {
+        List<ScheduleRes> scheduleRes = scheduleService.selectSchedule();
         return new ResponseEntity(scheduleRes, HttpStatus.OK);
     }
+
+    @ResponseBody
+    @PostMapping(value = "/insertSchedule")
+    public boolean insertSchedule(@RequestBody ScheduleReq scheduleReq) {
+        return scheduleService.insertSchedule(scheduleReq);
+    }
+
+    @ResponseBody
+    @PostMapping(value = "/updateSchedule")
+    public boolean updateSchedule(@RequestBody ScheduleReq scheduleReq) {
+        return scheduleService.updateSchedule(scheduleReq);
+    }
+
+    @ResponseBody
+    @PostMapping(value = "/deleteSchedule")
+    public boolean deleteSchedule(@RequestBody ScheduleReq scheduleReq) {
+        return scheduleService.deleteSchedule(scheduleReq);
+    }
+
 }

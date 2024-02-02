@@ -1,17 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="practice.itemService.usingJsp.practice.itemService.usingJsp.posts.schedule.mapper.ScheduleMapper">
+<mapper namespace="practice.itemService.usingJsp.posts.schedule.mapper.ScheduleMapper">
 
-    <!-- 당해년도 일정목록을 가져온다. -->
-    <select id="selectThisMonthSchedule" resultType="practice.itemService.usingJsp.posts.schedule.dto.ScheduleRes">
+    <!-- 전후 2년 일정목록을 가져온다. -->
+    <select id="selectSchedule" resultType="practice.itemService.usingJsp.posts.schedule.dto.ScheduleRes">
         select
-            s.title
-             , s.start_date as startDate
-             , s.end_date as endDate
+            s.idx as id
+            , s.title
+            , s.start_date as 'start'
+            , s.end_date as 'end'
+            , s.used_at as usedAt
         from schedule s
         where 1=1
-            and month(s.start_date) = #{month}
+            and s.used_at = 'Y'
+            and year(s.start_date) in
+            <foreach collection="years" item="year" index="index"  open="(" close=")" separator=",">
+                #{year}
+            </foreach>
     </select>
 
+    <!-- 일정 등록 ( insert 문은 Alias 등록 시 Syntax error 발생 )-->
+    <insert id="insertSchedule">
+        insert into schedule
+            ( title, start_date, end_date )
+        values
+            ( #{title}, #{start}, #{end} )
+    </insert>
+
+    <!-- 일정 날짜 수정 -->
+    <update id="updateSchedule">
+        update
+            schedule s
+        set
+            s.start_date = #{start}
+            , s.end_date = #{end}
+        where s.idx = #{id}
+    </update>
+
+    <!-- 일정 삭제 -->
+    <update id="deleteSchedule">
+        update
+            schedule s
+        set s.used_at = 'N'
+        where s.idx = #{id}
+    </update>
 </mapper>

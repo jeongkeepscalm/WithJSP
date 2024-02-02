@@ -7,8 +7,10 @@ import java.sql.Date;
 @Data
 public class ScheduleRes {
 
+    private int id;
     private String title;
-    private Date startDate;
-    private Date endDate;
+    private Date start;
+    private Date end;
+    private String usedAt;
 
 }
