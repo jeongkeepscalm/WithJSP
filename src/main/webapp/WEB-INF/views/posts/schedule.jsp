@@ -66,9 +66,9 @@
                 // slotMaxTime: '20:00', // Day 캘린더에서 종료 시간
                 // 해더에 표시할 툴바
                 headerToolbar: {
-                    left: 'prev,next today',
+                    left: '',
                     center: 'title',
-                    right: ''
+                    right: 'prev today next'
                         // 'dayGridMonth' +
                         // ',timeGridWeek' +
                         // ',timeGridDay' +

@@ -27,6 +27,8 @@
     <link rel="icon" href="/images/favicon.ico">
     <meta name="theme-color" content="#712cf9">
 
+    <script src="/js/common.js"></script>
+
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -96,10 +98,7 @@
             console.log(value);
         });
 
-
         console.log(`${bindingResult}`);
-
-
 
     </script>
 
@@ -148,13 +147,14 @@
         </div>
 
         <div class="form-floating">
-            <input type="number" class="form-control" name="age" id="inputAge" placeholder="Age" value="${user.age}">
-            <label for="inputAge">Age</label>
+            <input type="text" class="form-control" name="birthday" id="inputBirthday" placeholder="birthday"
+                   maxlength="8" value="${user.birthday}">
+            <label for="inputBirthday">birthday</label>
         </div>
         <div style="color:red;">
             <spring:hasBindErrors name="user">
-                <c:if test="${errors.hasFieldErrors('age')}">
-                    ${errors.getFieldError('age').defaultMessage}
+                <c:if test="${errors.hasFieldErrors('birthday')}">
+                    ${errors.getFieldError('birthday').defaultMessage}
                 </c:if>
             </spring:hasBindErrors>
         </div>
@@ -204,6 +204,51 @@
             </spring:hasBindErrors>
         </div>
 
+        <div class="form-check form-check-inline">
+            <c:choose>
+                <c:when test="${user.isAdmin eq 'Y'}">
+                    <input class="form-check-input" name="isAdmin" type="checkbox" value="${user.isAdmin}"
+                           id="adminId" onchange="adminCheck(this);" checked>
+                    <label class="form-check-label" for="adminId" style="margin: 0px 0px 10px 10px;">
+                        Is Administrator?
+                    </label>
+                </c:when>
+                <c:otherwise>
+                    <input class="form-check-input" name="isAdmin" type="checkbox" value="${user.isAdmin}"
+                           id="adminId" onchange="adminCheck(this);">
+                    <label class="form-check-label" for="adminId" style="margin: 0px 0px 10px 10px;">
+                        Is Administrator?
+                    </label>
+                </c:otherwise>
+            </c:choose>
+        </div>
+
+        <c:choose>
+            <c:when test="${user.isAdmin eq 'Y'}">
+                <div class="form-floating" id="adminCheckArea" style="display: block;">
+                    <input type="text" class="form-control" style="margin-bottom: 10px;"
+                           name="adminPassword" id="adminPasswordId" placeholder="AdminPassword">
+                    <label for="adminPasswordId">Admin Password</label>
+                </div>
+            </c:when>
+            <c:otherwise>
+                <div class="form-floating" id="adminCheckArea" style="display: none;">
+                    <input type="text" class="form-control" style="margin-bottom: 10px;"
+                           name="adminPassword" id="adminPasswordId" placeholder="AdminPassword">
+                    <label for="adminPasswordId">Admin Password</label>
+                </div>
+            </c:otherwise>
+        </c:choose>
+
+
+        <div style="color:red;" id="adminPasswordError">
+            <spring:hasBindErrors name="user">
+                <c:if test="${errors.hasFieldErrors('adminPassword')}">
+                    ${errors.getFieldError('adminPassword').defaultMessage}
+                </c:if>
+            </spring:hasBindErrors>
+        </div>
+
         <button class="w-100 btn btn-lg btn-primary" type="submit">Sign Up</button>
 
         <input class="w-100 btn btn-lg btn-primary" id="goBackHomeButton" type="button" style="margin-top: 10px" value="Go Back Home">
@@ -215,6 +260,7 @@
 
 <script>
 
+    // 값 유지
     document.getElementById("bloodTypeId").value = "${user.bloodType}";
 
     document.getElementsByName("sex").forEach(v => {
@@ -223,9 +269,23 @@
         }
     })
 
+    // 로그인 폼 가기
     document.getElementById("goBackHomeButton").addEventListener("click", () => {
         location.href = "/login";
     })
+
+    // 관리자 체크 시 입력란을 보여준다.
+    const adminCheck = function (e) {
+        if (e.checked) {
+            document.getElementById("adminId").value = "Y";
+            showNode("adminCheckArea", true);
+            showNode("adminPasswordError", true);
+        } else {
+            document.getElementById("adminId").value = "N";
+            showNode("adminCheckArea", false);
+            showNode("adminPasswordError", false);
+        }
+    };
 
 </script>
 

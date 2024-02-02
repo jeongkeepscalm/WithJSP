@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import practice.itemService.usingJsp.AdminPasswordConst;
 import practice.itemService.usingJsp.SessionConst;
 import practice.itemService.usingJsp.login.dto.BloodType;
 import practice.itemService.usingJsp.login.dto.LoginRequest;
@@ -100,6 +101,15 @@ public class LoginController {
     public String signUp(
             @Validated @ModelAttribute("user") SaveUserRequest saveUserRequest
             , BindingResult bindingResult) {
+
+        // 관리자 체크 되어 있을 경우
+        if (saveUserRequest.getIsAdmin().equals("Y")) {
+            // 관리자 비밀번호가 맞지 않을 경우
+            if (!saveUserRequest.getAdminPassword().equals(AdminPasswordConst.ADMIN_PASSWORD)) {
+                bindingResult.addError(new FieldError("user", "adminPassword", "* 비밀번호가 맞지 않습니다."));
+            }
+            return "login/signUp";
+        }
 
         // 아이디 중복확인
         if (loginService.selectUserDetail(saveUserRequest.getId()) != null) {

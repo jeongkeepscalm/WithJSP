@@ -16,3 +16,11 @@ async function apiPost(urlPath, body, headers = {}) {
         throw Error(data);
     }
 }
+
+const showNode = function (id, flag) {
+    if (flag) {
+        document.getElementById(id).style.display = "block";
+    } else {
+        document.getElementById(id).style.display = "none";
+    }
+}

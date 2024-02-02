@@ -54,9 +54,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public boolean insertSchedule(ScheduleReq scheduleReq) {
 
-        HttpSession session = getCurrentRequest().getSession();
-        User user = (User) session.getAttribute(SessionConst.LOGIN_USER);
-
+        User user = (User) getCurrentRequest().getSession().getAttribute(SessionConst.LOGIN_USER);
         ScheduleVO scheduleVO = ScheduleVO.from(scheduleReq);
         scheduleVO.setRegId(user.getId());
 

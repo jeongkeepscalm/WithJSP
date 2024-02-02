@@ -7,7 +7,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor // final 키워드가 붙은 필드들을 대상으로하는 생성자를 자동으로 생성해준다.
 public enum BloodType {
 
-    A("BloodType A"), B("BloodType B"), C("BloodType C");
+    A("BloodType A"), B("BloodType B")
+    , O("BloodType O"), AB("BloodType AB");
 
     private final String description;
     /**
