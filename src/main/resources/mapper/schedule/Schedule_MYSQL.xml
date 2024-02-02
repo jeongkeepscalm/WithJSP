@@ -10,10 +10,8 @@
             , s.title
             , s.start_date as 'start'
             , s.end_date as 'end'
-            , s.used_at as usedAt
         from schedule s
         where 1=1
-            and s.used_at = 'Y'
             and year(s.start_date) in
             <foreach collection="years" item="year" index="index"  open="(" close=")" separator=",">
                 #{year}
@@ -23,9 +21,9 @@
     <!-- 일정 등록 ( insert 문은 Alias 등록 시 Syntax error 발생 )-->
     <insert id="insertSchedule">
         insert into schedule
-            ( title, start_date, end_date )
+            ( title, start_date, end_date, reg_id )
         values
-            ( #{title}, #{start}, #{end} )
+            ( #{title}, #{start}, #{end}, #{regId} )
     </insert>
 
     <!-- 일정 날짜 수정 -->
@@ -35,14 +33,12 @@
         set
             s.start_date = #{start}
             , s.end_date = #{end}
+            , s.update_id = #{updateId}
         where s.idx = #{id}
     </update>
 
     <!-- 일정 삭제 -->
-    <update id="deleteSchedule">
-        update
-            schedule s
-        set s.used_at = 'N'
-        where s.idx = #{id}
-    </update>
+    <delete id="deleteSchedule">
+        delete from schedule s where s.idx = #{id}
+    </delete>
 </mapper>

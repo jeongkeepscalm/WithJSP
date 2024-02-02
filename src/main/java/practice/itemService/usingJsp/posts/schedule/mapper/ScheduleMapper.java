@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import practice.itemService.usingJsp.posts.schedule.dto.ScheduleReq;
 import practice.itemService.usingJsp.posts.schedule.dto.ScheduleRes;
+import practice.itemService.usingJsp.posts.schedule.dto.ScheduleVO;
 
 import java.util.List;
 
@@ -15,10 +16,10 @@ public interface ScheduleMapper {
     List<ScheduleRes> selectSchedule(@Param("years") int[] years);
 
     // 일정 등록
-    int insertSchedule(ScheduleReq scheduleReq);
+    int insertSchedule(ScheduleVO scheduleVO);
 
     // 일정 수정
-    int updateSchedule(ScheduleReq scheduleReq);
+    int updateSchedule(ScheduleVO scheduleVO);
 
     // 일정 삭제
     int deleteSchedule(ScheduleReq scheduleReq);

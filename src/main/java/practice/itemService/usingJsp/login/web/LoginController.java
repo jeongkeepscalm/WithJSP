@@ -41,7 +41,7 @@ public class LoginController {
     }
 
     // 로그인
-    @GetMapping("/login")
+    @GetMapping(value = {"/login", "/"})
     public String loginForm() {
         return "login/loginForm";
     }

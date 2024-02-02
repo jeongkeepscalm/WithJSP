@@ -3,6 +3,7 @@ package practice.itemService.usingJsp.posts.schedule.service;
 import org.springframework.stereotype.Service;
 import practice.itemService.usingJsp.posts.schedule.dto.ScheduleReq;
 import practice.itemService.usingJsp.posts.schedule.dto.ScheduleRes;
+import practice.itemService.usingJsp.posts.schedule.dto.ScheduleVO;
 
 import java.util.List;
 
