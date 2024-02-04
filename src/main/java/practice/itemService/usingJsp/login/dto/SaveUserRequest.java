@@ -1,18 +1,15 @@
 package practice.itemService.usingJsp.login.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.Range;
-import practice.itemService.usingJsp.exception.CustomNumberFormatException;
 
 @Data
 @Slf4j
+@AllArgsConstructor
+@NoArgsConstructor
 public class SaveUserRequest {
 
     @NotBlank(message = "* 아이디를 입력해주세요.")

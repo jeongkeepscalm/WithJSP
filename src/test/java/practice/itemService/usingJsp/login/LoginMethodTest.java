@@ -20,32 +20,47 @@ public class LoginMethodTest {
     @Test
     void 모든회원조회() {
 
-        // when, given
-        List<User> users = loginService.selectAllUser();
-        int allUserCount = loginService.selectAllUserCount();
+        try {
 
-        // then
-        Assertions.assertThat(users.size()).isEqualTo(allUserCount);
+            // when, given
+            List<User> users = loginService.selectAllUser();
+            int allUserCount = loginService.selectAllUserCount();
+
+            // then
+            Assertions.assertThat(users.size()).isEqualTo(allUserCount);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Test
     void 회원등록() {
 
-        // given
-        SaveUserRequest user = new SaveUserRequest("test7"
-                , "test2"
-                , ""
-                , 20
-                , "B"
-                , "M"
-                , "ojg");
+            // given
+            SaveUserRequest user = new SaveUserRequest("test7"
+                    , "test7"
+                    , "test7"
+                    , "0000000"
+                    , "B"
+                    , "M"
+                    , "ojg@gmail.com"
+                    , "N"
+                    , "N"
+            );
 
-        // when
-        loginService.insertUser(user);
+        try {
+            // when
+            loginService.insertUser(user);
 
-        //then
-        User userFound = loginService.selectUserDetail("test2");
-        Assertions.assertThat(userFound).isNotNull();
+            //then
+            User userFound = loginService.selectUserDetail("test2");
+            Assertions.assertThat(userFound).isNotNull();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
     }
 

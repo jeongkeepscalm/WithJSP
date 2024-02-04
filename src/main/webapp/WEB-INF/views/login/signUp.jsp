@@ -226,15 +226,15 @@
         <c:choose>
             <c:when test="${user.isAdmin eq 'Y'}">
                 <div class="form-floating" id="adminCheckArea" style="display: block;">
-                    <input type="text" class="form-control" style="margin-bottom: 10px;"
-                           name="adminPassword" id="adminPasswordId" placeholder="AdminPassword">
+                    <input type="password" class="form-control" style="margin-bottom: 10px;"
+                           name="adminPassword" id="adminPasswordId" placeholder="AdminPassword" value="${user.adminPassword}">
                     <label for="adminPasswordId">Admin Password</label>
                 </div>
             </c:when>
             <c:otherwise>
                 <div class="form-floating" id="adminCheckArea" style="display: none;">
-                    <input type="text" class="form-control" style="margin-bottom: 10px;"
-                           name="adminPassword" id="adminPasswordId" placeholder="AdminPassword">
+                    <input type="password" class="form-control" style="margin-bottom: 10px;"
+                           name="adminPassword" id="adminPasswordId" placeholder="AdminPassword" value="${user.adminPassword}">
                     <label for="adminPasswordId">Admin Password</label>
                 </div>
             </c:otherwise>

@@ -6,10 +6,12 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import practice.itemService.usingJsp.AES256;
 import practice.itemService.usingJsp.AdminPasswordConst;
 import practice.itemService.usingJsp.SessionConst;
 import practice.itemService.usingJsp.login.dto.BloodType;
@@ -53,29 +55,47 @@ public class LoginController {
             , @RequestParam(name = "redirectURL", defaultValue = "/main") String redirectURL
             , HttpServletRequest request) {
 
-        if (bindingResult.hasErrors()) {
-            return "login/loginForm";
+        try {
+
+            if (bindingResult.hasErrors()) {
+                return "login/loginForm";
+            }
+
+            // 아이디 비밀번호 검증로직
+
+            String requestedPassword = loginRequest.getPassword();
+
+            // 넘어온 비밀번호를 암호화해서 값을 set 해준 뒤, DB에 저장된 비밀번호와 비교한다.
+            String encryptedPassword = AES256.encrypt(requestedPassword);
+            loginRequest.setPassword(encryptedPassword);
+
+            User user = loginService.checkIfUser(loginRequest);
+
+            if (user == null) {
+
+                // 요청된 비밀번호로 reset
+                loginRequest.setPassword(requestedPassword);
+
+                bindingResult.addError(new FieldError("user"
+                        , "password"
+                        , "* 아이디 또는 비밀번호가 맞지 않습니다."));
+                return "login/loginForm";
+            }
+
+            // 세션이 있으면 있는 세션 반환, 없으면 신규 세션을 생성하여 user 정보를 담는다.
+            HttpSession session = request.getSession();
+            session.setAttribute(SessionConst.LOGIN_USER, user);
+
+            /**
+             * 세션저장소 { UUID : user } 저장.
+             * 쿠키저장소 { JSESSIONID : UUID } 저장.
+             * 클라이언트는 매 요청시 JSESSIONID 해당 쿠키를 전달한다.
+             * 서버에서는 해당 쿠키 정보로 세션저장소를 조회하여 보관한 유저 정보를 사용한다.
+             * */
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        // 아이디 비밀번호 검증로직
-        User user = loginService.checkIfUser(loginRequest);
-        if (user == null) {
-            bindingResult.addError(new FieldError("user"
-                    , "password"
-                    , "* 아이디 또는 비밀번호가 맞지 않습니다."));
-            return "login/loginForm";
-        }
-
-        // 세션이 있으면 있는 세션 반환, 없으면 신규 세션을 생성하여 user 정보를 담는다.
-        HttpSession session = request.getSession();
-        session.setAttribute(SessionConst.LOGIN_USER, user);
-
-        /**
-         * 세션저장소 { UUID : user } 저장.
-         * 쿠키저장소 { JSESSIONID : UUID } 저장.
-         * 클라이언트는 매 요청시 JSESSIONID 해당 쿠키를 전달한다.
-         * 서버에서는 해당 쿠키 정보로 세션저장소를 조회하여 보관한 유저 정보를 사용한다.
-         * */
 
         return "redirect:" + redirectURL;
 
@@ -97,35 +117,59 @@ public class LoginController {
         return "login/signUp";
     }
 
+    @Transactional
     @PostMapping("/signUp")
     public String signUp(
             @Validated @ModelAttribute("user") SaveUserRequest saveUserRequest
             , BindingResult bindingResult) {
 
-        // 관리자 체크 되어 있을 경우
-        if (saveUserRequest.getIsAdmin().equals("Y")) {
-            // 관리자 비밀번호가 맞지 않을 경우
-            if (!saveUserRequest.getAdminPassword().equals(AdminPasswordConst.ADMIN_PASSWORD)) {
-                bindingResult.addError(new FieldError("user", "adminPassword", "* 비밀번호가 맞지 않습니다."));
+        try {
+
+            // 관리자 체크 되어 있을 경우
+            if (saveUserRequest.getIsAdmin().equals("Y")) {
+
+                // 관리자 비밀번호를 입력하지 않았을 경우
+                if (saveUserRequest.getAdminPassword().equals("")) {
+                    bindingResult.addError(new FieldError("user", "adminPassword", "* 비밀번호를 입력해 주세요"));
+                    return "login/signUp";
+                }
+
+                // 관리자 비밀번호가 맞지 않을 경우
+                if (!saveUserRequest.getAdminPassword().equals(AdminPasswordConst.ADMIN_PASSWORD)) {
+                    bindingResult.addError(new FieldError("user", "adminPassword", "* 비밀번호가 맞지 않습니다."));
+                    return "login/signUp";
+                }
+
             }
-            return "login/signUp";
-        }
 
-        // 아이디 중복확인
-        if (loginService.selectUserDetail(saveUserRequest.getId()) != null) {
-            bindingResult.addError(new FieldError("user", "id", "* 중복되는 아이디가 있습니다."));
-            return "login/signUp";
-        }
+            // 아이디 중복확인
+            if (loginService.selectUserDetail(saveUserRequest.getId()) != null) {
+                bindingResult.addError(new FieldError("user", "id", "* 중복되는 아이디가 있습니다."));
+                return "login/signUp";
+            }
 
-        // TODO input age 란에 문자열 입력 시 defaultMessage 가 영문으로 길게 뜨는 것 막기. errors.properties 가 효과가 없음.
-        if (bindingResult.hasErrors()) {
-            return "login/signUp";
-        }
+            // TODO input age 란에 문자열 입력 시 defaultMessage 가 영문으로 길게 뜨는 것 막기. errors.properties 가 효과가 없음.
+            if (bindingResult.hasErrors()) {
+                return "login/signUp";
+            }
 
-        loginService.insertUser(saveUserRequest);
+            // 비밀번호 암호화
+            String encryptedPassword = AES256.encrypt(saveUserRequest.getPassword());
+            saveUserRequest.setPassword(encryptedPassword);
+
+            loginService.insertUser(saveUserRequest);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
 
         return "redirect:/";
+
     }
+
+
 
 
 }

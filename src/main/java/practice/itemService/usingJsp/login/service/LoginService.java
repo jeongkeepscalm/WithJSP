@@ -12,28 +12,25 @@ import java.util.List;
 public interface LoginService {
 
     // 모든 회원 조회
-    User selectUserDetail(String id);
+    User selectUserDetail(String id) throws Exception;
 
     // 모든 회원 수 조회
-    int selectAllUserCount();
+    int selectAllUserCount() throws Exception;
 
     // 회원 등록
-    List<User> selectAllUser();
+    List<User> selectAllUser() throws Exception;
 
     // 회원 상세 조회
-    boolean insertUser(SaveUserRequest saveUserRequest);
+    boolean insertUser(SaveUserRequest saveUserRequest) throws Exception;
 
     // 회원 삭제
-    boolean deleteUser(String id);
+    boolean deleteUser(String id) throws Exception;
 
     // 회원 정보 수정
-    boolean updateUser(SaveUserRequest saveUserRequest);
+    boolean updateUser(SaveUserRequest saveUserRequest) throws Exception;
 
     // 회원인지 확인
-    User checkIfUser(LoginRequest loginRequest);
-
-    // 모든 메뉴 조회
-    List<MenuVO> selectAllMenu();
+    User checkIfUser(LoginRequest loginRequest) throws Exception;
 
 
 }

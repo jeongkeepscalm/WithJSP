@@ -20,7 +20,7 @@ public class LoginApi {
     // @RequestParam : 쿼리스트링으로 데이터가 전송되며 GetMapping 에 쓰인다.
     @ResponseBody
     @PostMapping("/selectDetail.cm")
-    public ResponseEntity selectUserDetail(@RequestBody Map<String, String> map) {
+    public ResponseEntity selectUserDetail(@RequestBody Map<String, String> map) throws Exception {
         return new ResponseEntity<>(loginService.selectUserDetail(map.get("id")), HttpStatus.OK);
     }
 

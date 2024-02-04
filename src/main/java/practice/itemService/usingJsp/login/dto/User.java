@@ -12,9 +12,10 @@ public class User {
     private String id;
     private String password;
     private String name;
-    private Integer age;
+    private Integer birthDay;
     private String bloodType;
     private String sex;
     private String email;
+    private String isAdmin = "N";
 
 }

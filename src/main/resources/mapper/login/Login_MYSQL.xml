@@ -5,7 +5,7 @@
 
     <select id="selectAllUser" resultType="practice.itemService.usingJsp.login.dto.User">
         SELECT
-            id, password, name, sex, birthday, email, bloodType
+            id, password, name, sex, birthday, email, bloodType, is_admin
         FROM user
     </select>
 
@@ -15,14 +15,14 @@
 
     <insert id="insertUser">
         INSERT INTO user
-            (id, password, name, sex, birthday, email, bloodType)
+            (id, password, name, sex, birthday, email, bloodType, is_admin)
         VALUES
-            (#{id}, #{password}, #{name}, #{sex}, #{birthday}, #{email}, #{bloodType})
+            (#{id}, #{password}, #{name}, #{sex}, #{birthday}, #{email}, #{bloodType}, #{isAdmin})
     </insert>
 
     <select id="selectUserDetail" resultType="practice.itemService.usingJsp.login.dto.User">
         SELECT
-            id, password, name, sex, birthday, email, bloodType
+            id, password, name, sex, birthday, email, bloodType, is_admin as isAdmin
         FROM user
         where id = #{id}
     </select>
@@ -45,7 +45,7 @@
 
     <select id="checkIfUser" resultType="practice.itemService.usingJsp.login.dto.User">
         SELECT
-            id, password, name, sex, birthday, email, bloodType
+            id, password, name, sex, birthday, email, bloodType, is_admin as isAdmin
         FROM user
         where 1=1
             and id = #{id}
