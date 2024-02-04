@@ -11,15 +11,21 @@ public class AES256 {
     private static String KEY = "abcdefghijklmnopqrstuvwxz000093";
     private static String IV = KEY.substring(0, 16);
 
-    public static String encrypt(String plainText) throws Exception {
+    public static String encrypt(String plainText) {
 
-        Cipher cipher = Cipher.getInstance(ALGORITHM);
-        SecretKeySpec keySpec = new SecretKeySpec(IV.getBytes(), "AES");
-        IvParameterSpec ivParamSpec = new IvParameterSpec(IV.getBytes());
-        cipher.init(Cipher.ENCRYPT_MODE, keySpec, ivParamSpec);
+        try {
 
-        byte[] encrypted = cipher.doFinal(plainText.getBytes("UTF-8"));
-        return Base64.getEncoder().encodeToString(encrypted);
+            Cipher cipher = Cipher.getInstance(ALGORITHM);
+            SecretKeySpec keySpec = new SecretKeySpec(IV.getBytes(), "AES");
+            IvParameterSpec ivParamSpec = new IvParameterSpec(IV.getBytes());
+            cipher.init(Cipher.ENCRYPT_MODE, keySpec, ivParamSpec);
+
+            byte[] encrypted = cipher.doFinal(plainText.getBytes("UTF-8"));
+            return Base64.getEncoder().encodeToString(encrypted);
+
+        } catch (Exception e) {
+            throw new RuntimeException("Password encryption failed : {}", e);
+        }
 
     }
 

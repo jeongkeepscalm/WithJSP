@@ -1,6 +1,9 @@
 package practice.itemService.usingJsp.login.service;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
+import practice.itemService.usingJsp.exception.CustomBindingResultException;
 import practice.itemService.usingJsp.login.dto.LoginRequest;
 import practice.itemService.usingJsp.login.dto.SaveUserRequest;
 import practice.itemService.usingJsp.login.dto.User;
@@ -32,5 +35,6 @@ public interface LoginService {
     // 회원인지 확인
     User checkIfUser(LoginRequest loginRequest) throws Exception;
 
-
+    // 로그인 프로세스
+    User loginProcess(LoginRequest loginRequest, BindingResult bindingResult) throws CustomBindingResultException;
 }

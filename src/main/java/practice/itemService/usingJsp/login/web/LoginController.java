@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import practice.itemService.usingJsp.AES256;
 import practice.itemService.usingJsp.AdminPasswordConst;
 import practice.itemService.usingJsp.SessionConst;
+import practice.itemService.usingJsp.exception.CustomBindingResultException;
 import practice.itemService.usingJsp.login.dto.BloodType;
 import practice.itemService.usingJsp.login.dto.LoginRequest;
 import practice.itemService.usingJsp.login.dto.SaveUserRequest;
@@ -58,25 +59,7 @@ public class LoginController {
 
         try {
 
-            if (bindingResult.hasErrors()) {
-                return "login/loginForm";
-            }
-
-            String requestedPassword = loginRequest.getPassword();
-
-            // 유저 확인
-            User user = loginService.checkIfUser(loginRequest);
-
-            if (user == null) {
-
-                // 요청된 비밀번호로 reset
-                loginRequest.setPassword(requestedPassword);
-
-                bindingResult.addError(new FieldError("user"
-                        , "password"
-                        , "* 아이디 또는 비밀번호가 맞지 않습니다."));
-                return "login/loginForm";
-            }
+            User user = loginService.loginProcess(loginRequest, bindingResult);
 
             // 세션이 있으면 있는 세션 반환, 없으면 신규 세션을 생성하여 user 정보를 담는다.
             HttpSession session = request.getSession();
@@ -89,8 +72,12 @@ public class LoginController {
              * 서버에서는 해당 쿠키 정보로 세션저장소를 조회하여 보관한 유저 정보를 사용한다.
              * */
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (CustomBindingResultException e) {
+
+            if (e.getBindingResult().hasErrors()) {
+                return "login/loginForm";
+            }
+
         }
 
         return "redirect:" + redirectURL;
