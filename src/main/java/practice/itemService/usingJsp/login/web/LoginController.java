@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import practice.itemService.usingJsp.AES256;
 import practice.itemService.usingJsp.AdminPasswordConst;
 import practice.itemService.usingJsp.SessionConst;
@@ -38,8 +39,8 @@ public class LoginController {
     @ModelAttribute("sex")
     public Map<String, String> sex() {
         LinkedHashMap<String, String> map = new LinkedHashMap<>();
-        map.put("m", "Male");
-        map.put("f", "Female");
+        map.put("M", "Male");
+        map.put("F", "Female");
         return map;
     }
 
@@ -61,14 +62,9 @@ public class LoginController {
                 return "login/loginForm";
             }
 
-            // 아이디 비밀번호 검증로직
-
             String requestedPassword = loginRequest.getPassword();
 
-            // 넘어온 비밀번호를 암호화해서 값을 set 해준 뒤, DB에 저장된 비밀번호와 비교한다.
-            String encryptedPassword = AES256.encrypt(requestedPassword);
-            loginRequest.setPassword(encryptedPassword);
-
+            // 유저 확인
             User user = loginService.checkIfUser(loginRequest);
 
             if (user == null) {
@@ -121,7 +117,8 @@ public class LoginController {
     @PostMapping("/signUp")
     public String signUp(
             @Validated @ModelAttribute("user") SaveUserRequest saveUserRequest
-            , BindingResult bindingResult) {
+            , BindingResult bindingResult
+            , RedirectAttributes redirectAttributes) {
 
         try {
 
@@ -153,11 +150,10 @@ public class LoginController {
                 return "login/signUp";
             }
 
-            // 비밀번호 암호화
-            String encryptedPassword = AES256.encrypt(saveUserRequest.getPassword());
-            saveUserRequest.setPassword(encryptedPassword);
-
             loginService.insertUser(saveUserRequest);
+
+            // 회원 등록 완료 alert
+            redirectAttributes.addAttribute("completedWithSigningUp", true);
 
         } catch (Exception e) {
 

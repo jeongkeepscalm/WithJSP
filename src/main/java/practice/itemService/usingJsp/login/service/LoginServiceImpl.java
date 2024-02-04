@@ -30,6 +30,11 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public boolean insertUser(SaveUserRequest saveUserRequest) throws Exception {
+
+        // 비밀번호 암호화
+        String encryptedPassword = AES256.encrypt(saveUserRequest.getPassword());
+        saveUserRequest.setPassword(encryptedPassword);
+
         return loginMapper.insertUser(saveUserRequest) > 0 ? true : false;
     }
 
@@ -50,6 +55,11 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public User checkIfUser(LoginRequest loginRequest) throws Exception {
+
+        // 요청된 비밀번호를 암호화한 뒤, DB에 저장된 비밀번호와 비교한다.
+        String encryptedPassword = AES256.encrypt(loginRequest.getPassword());
+        loginRequest.setPassword(encryptedPassword);
+
         return loginMapper.checkIfUser(loginRequest);
     }
 

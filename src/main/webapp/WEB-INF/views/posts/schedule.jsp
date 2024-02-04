@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
@@ -7,13 +7,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset='utf-8' />
+    <meta charset='utf-8'/>
     <!-- 화면 해상도에 따라 글자 크기 대응(모바일 대응) -->
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <!-- jquery CDN -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- fullcalendar CDN -->
-    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css' rel='stylesheet' />
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css' rel='stylesheet'/>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js'></script>
     <!-- fullcalendar 언어 CDN -->
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
@@ -27,6 +28,7 @@
             font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
             font-size: 14px;
         }
+
         /* 캘린더 위의 해더 스타일(날짜가 있는 부분) */
         .fc-header-toolbar {
             padding-top: 1em;
@@ -43,18 +45,18 @@
 <script>
 
     const param = {
-        id : ""
-        , title : ""
-        , start :
+        id: ""
+        , title: ""
+        , start:
             String(new Date().getFullYear()) + "-"
             + String(new Date().getMonth() + 1).padStart(2, "0") + "-"
             + String(new Date().getDate()).padStart(2, "0")
-        , end : ""
+        , end: ""
     };
     let chosenDate = param.start;
 
-    (function(){
-        $(function(){
+    (function () {
+        $(function () {
 
             var calendarEl = $('#calendar')[0]; // get calendar element
 
@@ -69,20 +71,27 @@
                     left: '',
                     center: 'title',
                     right: 'prev today next'
-                        // 'dayGridMonth' +
-                        // ',timeGridWeek' +
-                        // ',timeGridDay' +
-                        // ' listWeek'
+                    // 'dayGridMonth' +
+                    // ',timeGridWeek' +
+                    // ',timeGridDay' +
+                    // ' listWeek'
                 },
                 initialView: 'dayGridMonth', // 초기 로드 될때 보이는 캘린더 화면(기본 설정: 달)
                 initialDate: chosenDate, // 초기 날짜 설정 (설정하지 않으면 오늘 날짜가 보인다.)
                 navLinks: true, // 날짜를 선택하면 Day 캘린더나 Week 캘린더로 링크
+                <c:choose>
+                <c:when test="${sessionScope.loginUser.isAdmin eq 'Y'}">
                 editable: true, // 수정 가능
+                </c:when>
+                <c:otherwise>
+                editable: false, // 수정 불가능
+                </c:otherwise>
+                </c:choose>
                 selectable: true, // 달력 일자 드래그 설정가능
                 nowIndicator: true, // 현재 시간 마크
                 dayMaxEvents: true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
                 locale: 'ko', // 한국어 설정
-                eventAdd: function(obj) { // 이벤트가 추가되면 발생하는 이벤트
+                eventAdd: function (obj) { // 이벤트가 추가되면 발생하는 이벤트
 
                     param.title = obj.event.title;
                     param.start = obj.event.startStr;
@@ -112,7 +121,12 @@
                         });
 
                 },
-                eventChange: function(obj) { // 이벤트가 수정되면 발생하는 이벤트
+                eventChange: function (obj) { // 이벤트가 수정되면 발생하는 이벤트
+
+                    <c:if test="${sessionScope.loginUser.isAdmin eq 'N'}">
+                        alert("관리자만 일정 수정이 가능합니다.")
+                        return;
+                    </c:if>
 
                     param.title = obj.event.title;
                     param.start = obj.event.startStr;
@@ -133,7 +147,12 @@
                 // eventRemove: function(obj){ // 이벤트가 삭제되면 발생하는 이벤트
                 //     console.log(obj);
                 // },
-                eventClick: function (info){
+                eventClick: function (info) {
+
+                    <c:if test="${sessionScope.loginUser.isAdmin eq 'N'}">
+                        alert("관리자만 일정 삭제가 가능합니다.")
+                        return;
+                    </c:if>
 
                     if (confirm(`${info.event.title} 일정을 삭제할까요?`)) {
 
@@ -152,7 +171,13 @@
                             });
                     }
                 },
-                select: function(arg) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
+                select: function (arg) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
+
+                    <c:if test="${sessionScope.loginUser.isAdmin eq 'N'}">
+                        alert("관리자만 일정 등록이 가능합니다.")
+                        return;
+                    </c:if>
+
                     var title = prompt('어떤 일정을 등록하시겠습니까?');
                     if (title) {
                         calendar.addEvent({

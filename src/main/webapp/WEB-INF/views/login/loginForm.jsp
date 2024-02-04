@@ -129,9 +129,18 @@
 <script src="/js/login.js"></script>
 
 <script>
+
+    document.addEventListener("DOMContentLoaded", function() {
+        <c:if test="${param.completedWithSigningUp}">
+            alert("회원가입을 완료하셨습니다.")
+        </c:if>
+    })
+
     document.getElementById("signInButton").addEventListener("click", () => {
         location.href = "/signUp";
     })
+
+
 </script>
 
 </body>
