@@ -4,7 +4,7 @@ import lombok.Getter;
 import org.springframework.validation.BindingResult;
 
 @Getter
-public class CustomBindingResultException extends RuntimeException{
+public class CustomBindingResultException extends RuntimeException {
 
     private final BindingResult bindingResult;
 

@@ -118,7 +118,7 @@
 
         <div class="checkbox mb-3">
             <label style="font-size: 20px;">
-                <input type="checkbox" value="remember-me"> Remember me
+                <input type="checkbox" name="rememberUserInfo" id="rememberMeId"> Remember me
             </label>
         </div>
         <button class="w-100 btn btn-lg btn-primary" type="submit">Sign In</button>

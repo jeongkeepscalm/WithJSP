@@ -11,6 +11,7 @@ import practice.itemService.usingJsp.AES256;
 import practice.itemService.usingJsp.AdminPasswordConst;
 import practice.itemService.usingJsp.RememberMe;
 import practice.itemService.usingJsp.exception.CustomBindingResultException;
+import practice.itemService.usingJsp.exception.CustomNoFileException;
 import practice.itemService.usingJsp.login.dto.LoginRequest;
 import practice.itemService.usingJsp.login.dto.SaveUserRequest;
 import practice.itemService.usingJsp.login.dto.User;
@@ -76,7 +77,7 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public User loginProcess(LoginRequest loginRequest, BindingResult bindingResult) throws CustomBindingResultException {
+    public User loginProcess(LoginRequest loginRequest, BindingResult bindingResult) throws CustomBindingResultException, CustomNoFileException {
 
         if (bindingResult.hasErrors()) {
             throw new CustomBindingResultException(bindingResult);
@@ -103,7 +104,12 @@ public class LoginServiceImpl implements LoginService {
 
         }
 
-        RememberMe.writeCredentialsText(loginRequest);
+        // 로그인, 비밀번호 정보 저장 기능을 활성화 시켰을 경우
+        if (loginRequest.isRememberUserInfo()) {
+            RememberMe.writeCredentialsText(loginRequest);
+        } else {
+            RememberMe.readCredentialsText(loginRequest);
+        }
 
         return user;
 
