@@ -6,7 +6,7 @@ import lombok.Data;
 import java.sql.Date;
 
 @Data
-@Builder
+//@Builder
 public class ScheduleRes {
 
     private int id;
@@ -14,12 +14,12 @@ public class ScheduleRes {
     private Date start;
     private Date end;
 
-    public ScheduleRes scheduleVO() {
-        return ScheduleRes.builder()
-                .id(id)
-                .title(title)
-                .start(start)
-                .end(end)
-                .build();
-    }
+//    public ScheduleRes scheduleVO() {
+//        return ScheduleRes.builder()
+//                .id(id)
+//                .title(title)
+//                .start(start)
+//                .end(end)
+//                .build();
+//    }
 }

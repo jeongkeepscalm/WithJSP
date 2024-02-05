@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import practice.itemService.usingJsp.AES256;
 import practice.itemService.usingJsp.AdminPasswordConst;
+import practice.itemService.usingJsp.RememberMe;
 import practice.itemService.usingJsp.SessionConst;
 import practice.itemService.usingJsp.exception.CustomBindingResultException;
 import practice.itemService.usingJsp.login.dto.BloodType;
@@ -47,7 +49,8 @@ public class LoginController {
 
     // 로그인
     @GetMapping(value = {"/login", "/"})
-    public String loginForm() {
+    public String loginForm(@ModelAttribute("user") User user) {
+        RememberMe.readCredentialsText(user);
         return "login/loginForm";
     }
 
@@ -72,15 +75,15 @@ public class LoginController {
              * 서버에서는 해당 쿠키 정보로 세션저장소를 조회하여 보관한 유저 정보를 사용한다.
              * */
 
+            return "redirect:" + redirectURL;
+
         } catch (CustomBindingResultException e) {
 
-            if (e.getBindingResult().hasErrors()) {
-                return "login/loginForm";
-            }
+            return "login/loginForm";
 
         }
 
-        return "redirect:" + redirectURL;
+
 
     }
 
@@ -109,49 +112,20 @@ public class LoginController {
 
         try {
 
-            // 관리자 체크 되어 있을 경우
-            if (saveUserRequest.getIsAdmin().equals("Y")) {
-
-                // 관리자 비밀번호를 입력하지 않았을 경우
-                if (saveUserRequest.getAdminPassword().equals("")) {
-                    bindingResult.addError(new FieldError("user", "adminPassword", "* 비밀번호를 입력해 주세요"));
-                    return "login/signUp";
-                }
-
-                // 관리자 비밀번호가 맞지 않을 경우
-                if (!saveUserRequest.getAdminPassword().equals(AdminPasswordConst.ADMIN_PASSWORD)) {
-                    bindingResult.addError(new FieldError("user", "adminPassword", "* 비밀번호가 맞지 않습니다."));
-                    return "login/signUp";
-                }
-
-            }
-
-            // 아이디 중복확인
-            if (loginService.selectUserDetail(saveUserRequest.getId()) != null) {
-                bindingResult.addError(new FieldError("user", "id", "* 중복되는 아이디가 있습니다."));
-                return "login/signUp";
-            }
-
-            // TODO input age 란에 문자열 입력 시 defaultMessage 가 영문으로 길게 뜨는 것 막기. errors.properties 가 효과가 없음.
-            if (bindingResult.hasErrors()) {
-                return "login/signUp";
-            }
-
-            loginService.insertUser(saveUserRequest);
+            loginService.signUpProcess(saveUserRequest, bindingResult);
 
             // 회원 등록 완료 alert
             redirectAttributes.addAttribute("completedWithSigningUp", true);
 
-        } catch (Exception e) {
+            return "redirect:/";
 
-            e.printStackTrace();
+        } catch (CustomBindingResultException e) {
+
+            return "login/signUp";
 
         }
 
-        return "redirect:/";
-
     }
-
 
 
 

@@ -8,7 +8,7 @@ import java.util.Base64;
 public class AES256 {
 
     private static final String ALGORITHM = "AES/CBC/PKCS5Padding";
-    private static String KEY = "abcdefghijklmnopqrstuvwxz000093";
+    private static String KEY = "abcdefghijklmnopqrstuvwxyz000093";
     private static String IV = KEY.substring(0, 16);
 
     public static String encrypt(String plainText) {
@@ -16,7 +16,7 @@ public class AES256 {
         try {
 
             Cipher cipher = Cipher.getInstance(ALGORITHM);
-            SecretKeySpec keySpec = new SecretKeySpec(IV.getBytes(), "AES");
+            SecretKeySpec keySpec = new SecretKeySpec(KEY.getBytes(), "AES");
             IvParameterSpec ivParamSpec = new IvParameterSpec(IV.getBytes());
             cipher.init(Cipher.ENCRYPT_MODE, keySpec, ivParamSpec);
 
@@ -29,17 +29,24 @@ public class AES256 {
 
     }
 
-    public String decrypt(String cipherText) throws Exception {
+    public static String decrypt(String cipherText) {
 
-        Cipher cipher = Cipher.getInstance(ALGORITHM);
-        SecretKeySpec keySpec = new SecretKeySpec(Base64.getDecoder().decode(KEY), "AES");
-        IvParameterSpec ivSpec = new IvParameterSpec(Base64.getDecoder().decode(IV));
+        try {
 
-        cipher.init(Cipher.DECRYPT_MODE, keySpec, ivSpec);
+            Cipher cipher = Cipher.getInstance(ALGORITHM);
+            SecretKeySpec keySpec = new SecretKeySpec(KEY.getBytes(), "AES");
+            IvParameterSpec ivSpec = new IvParameterSpec(IV.getBytes());
 
-        byte[] decodedBytes = Base64.getDecoder().decode(cipherText);
-        byte[] decrypted = cipher.doFinal(decodedBytes);
-        return new String(decrypted, "UTF-8");
+            cipher.init(Cipher.DECRYPT_MODE, keySpec, ivSpec);
+
+            byte[] decodedBytes = Base64.getDecoder().decode(cipherText);
+            byte[] decrypted = cipher.doFinal(decodedBytes);
+            return new String(decrypted, "UTF-8");
+
+        } catch (Exception e) {
+            throw new RuntimeException("Password decryption failed : {}", e);
+        }
+
 
     }
 

@@ -15,7 +15,7 @@ import java.util.List;
 public interface LoginService {
 
     // 모든 회원 조회
-    User selectUserDetail(String id) throws Exception;
+    User selectUserDetail(String id);
 
     // 모든 회원 수 조회
     int selectAllUserCount() throws Exception;
@@ -24,7 +24,7 @@ public interface LoginService {
     List<User> selectAllUser() throws Exception;
 
     // 회원 상세 조회
-    boolean insertUser(SaveUserRequest saveUserRequest) throws Exception;
+    boolean insertUser(SaveUserRequest saveUserRequest);
 
     // 회원 삭제
     boolean deleteUser(String id) throws Exception;
@@ -37,4 +37,7 @@ public interface LoginService {
 
     // 로그인 프로세스
     User loginProcess(LoginRequest loginRequest, BindingResult bindingResult) throws CustomBindingResultException;
+
+    // 회원가입 프로세스
+    void signUpProcess(SaveUserRequest saveUserRequest, BindingResult bindingResult) throws CustomBindingResultException;
 }
