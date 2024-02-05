@@ -77,7 +77,7 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public User loginProcess(LoginRequest loginRequest, BindingResult bindingResult) throws CustomBindingResultException, CustomNoFileException {
+    public User loginProcess(LoginRequest loginRequest, BindingResult bindingResult) throws CustomBindingResultException {
 
         if (bindingResult.hasErrors()) {
             throw new CustomBindingResultException(bindingResult);
@@ -108,7 +108,7 @@ public class LoginServiceImpl implements LoginService {
         if (loginRequest.isRememberUserInfo()) {
             RememberMe.writeCredentialsText(loginRequest);
         } else {
-            RememberMe.readCredentialsText(loginRequest);
+
         }
 
         return user;

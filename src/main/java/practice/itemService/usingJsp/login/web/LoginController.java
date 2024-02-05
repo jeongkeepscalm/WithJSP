@@ -18,6 +18,7 @@ import practice.itemService.usingJsp.AdminPasswordConst;
 import practice.itemService.usingJsp.RememberMe;
 import practice.itemService.usingJsp.SessionConst;
 import practice.itemService.usingJsp.exception.CustomBindingResultException;
+import practice.itemService.usingJsp.exception.CustomNoFileException;
 import practice.itemService.usingJsp.login.dto.BloodType;
 import practice.itemService.usingJsp.login.dto.LoginRequest;
 import practice.itemService.usingJsp.login.dto.SaveUserRequest;
@@ -49,7 +50,7 @@ public class LoginController {
 
     // 로그인
     @GetMapping(value = {"/login", "/"})
-    public String loginForm(@ModelAttribute("user") User user) {
+    public String loginForm(@ModelAttribute("user") User user) throws CustomNoFileException {
         RememberMe.readCredentialsText(user);
         return "login/loginForm";
     }
