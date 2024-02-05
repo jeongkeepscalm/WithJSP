@@ -40,3 +40,5 @@ out/
 ### db information ###
 src/main/resources/application.properties
 
+
+credentials.txt
