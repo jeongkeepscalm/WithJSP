@@ -20,4 +20,6 @@ public class User {
     private String email;
     private String isAdmin = "N";
 
+    private boolean rememberUserInfo;
+
 }

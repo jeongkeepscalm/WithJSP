@@ -117,8 +117,16 @@
         </div>
 
         <div class="checkbox mb-3">
+
             <label style="font-size: 20px;">
-                <input type="checkbox" name="rememberUserInfo" id="rememberMeId"> Remember me
+                <c:choose>
+                    <c:when test="${user.rememberUserInfo}">
+                        <input type="checkbox" name="rememberUserInfo" id="rememberMeId" checked> Remember me
+                    </c:when>
+                    <c:otherwise>
+                        <input type="checkbox" name="rememberUserInfo" id="rememberMeId"> Remember me
+                    </c:otherwise>
+                </c:choose>
             </label>
         </div>
         <button class="w-100 btn btn-lg btn-primary" type="submit">Sign In</button>

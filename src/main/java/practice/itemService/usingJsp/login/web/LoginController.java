@@ -51,7 +51,12 @@ public class LoginController {
     // 로그인
     @GetMapping(value = {"/login", "/"})
     public String loginForm(@ModelAttribute("user") User user) throws CustomNoFileException {
+
         RememberMe.readCredentialsText(user);
+
+        // 예외가 터지지 않을 경우(파일이 있을 경우), 기억하기 기능을 활성화 한다.
+        user.setRememberUserInfo(true);
+
         return "login/loginForm";
     }
 

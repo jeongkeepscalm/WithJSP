@@ -1,10 +1,9 @@
 package practice.itemService.usingJsp.login.service;
 
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import practice.itemService.usingJsp.AES256;
@@ -19,6 +18,7 @@ import practice.itemService.usingJsp.login.mapper.LoginMapper;
 
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class LoginServiceImpl implements LoginService {
@@ -108,7 +108,7 @@ public class LoginServiceImpl implements LoginService {
         if (loginRequest.isRememberUserInfo()) {
             RememberMe.writeCredentialsText(loginRequest);
         } else {
-
+            RememberMe.deleteCredentialsText();
         }
 
         return user;

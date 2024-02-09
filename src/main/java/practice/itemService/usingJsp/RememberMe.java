@@ -33,9 +33,12 @@ public class RememberMe {
             String encryptedPassword = loginRequest.getPassword(); // 서비스 로직에서 이미 비밀번호를 암호화 해놓은 상태.
             String encryptedId = AES256.encrypt(requestedId);
             String currentTime = LocalDateTime.now().format(FORMATTER);
+            boolean rememberUserInfo = loginRequest.isRememberUserInfo();
 
             Path path = Paths.get(CREDENTIALS_FILE); // 파일 경로 설정
-            Files.write(path, (encryptedId + "\n" + encryptedPassword + "\n" + currentTime).getBytes()); // 파일 생성
+            Files.write(path, (encryptedId
+                    + "\n" + encryptedPassword
+                    + "\n" + currentTime).getBytes()); // 파일 생성
 
         } catch (IOException e) {
             log.error("An error occurred while writing to the file: {}", e.getMessage());
@@ -72,5 +75,24 @@ public class RememberMe {
     }
 
 
+    // 암호화 된 아이디, 비밀번호가 있는 파일을 삭제한다.
+    public static void deleteCredentialsText() {
+        try {
+            Files.delete(Paths.get(CREDENTIALS_FILE));
+        } catch (IOException e) {
+            log.error("An error occurred while reading to the file : {}", e.getMessage());
+        }
+    }
 
+    public static boolean selectCredentialsText() throws CustomNoFileException {
+        try {
+            List<String> lines = Files.readAllLines(Paths.get(CREDENTIALS_FILE));
+            return true;
+        } catch (NoSuchFileException e) {
+            throw new CustomNoFileException(CREDENTIALS_FILE);
+        } catch (IOException e) {
+            log.error("An error occurred while reading to the file : {}", e.getMessage());
+            return false;
+        }
+    }
 }
