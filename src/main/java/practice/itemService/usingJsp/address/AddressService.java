@@ -3,6 +3,7 @@ package practice.itemService.usingJsp.address;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -15,8 +16,8 @@ public class AddressService {
         return dao.select_obj_date();
     }
 
-    public int insert_addr(Map<String, Object> map){
-        return dao.insert_addr(map);
+    public int insert_addr(List<Map<String, Object>> list){
+        return dao.insert_addr(list);
     }
 
     public int update_addr(Map<String, Object> map){
